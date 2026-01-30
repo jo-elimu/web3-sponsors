@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { abi } from "../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionVerifierModule#DistributionVerifier.json";
+import { abi as abi_distribution_verifier } from "../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionVerifierModule#DistributionVerifier.json";
 import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, createPublicClient, http } from "viem";
 import { sepolia } from "viem/chains";
@@ -16,23 +16,39 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
 
     const publicClient = createPublicClient({
         chain: sepolia,
-        transport: http("https://0xrpc.io/sep")
+        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
     useEffect(() => {
         async function fetchContractEvents() {
-            const logs = await publicClient.getContractEvents({
-                abi: abi,
-                address: deploymentAddress,
-                fromBlock: BigInt(9_760_205), // https://sepolia.etherscan.io/tx/0x916f56787bef5054de0ba10018d5621061d2384d30ae2d806a553e82963968de
-                eventName: eventName,
-                args: {
-                    queueNumber: queueNumber
-                }
-            })
-            console.debug("logs:", logs)
-            setEvents(logs)
+            let allLogs: any[] = [];
+
+            const startBlock = BigInt(9_907_896); // https://sepolia.etherscan.io/tx/0xb087a52b94f22eb49b7b288e7a8371241e0e5d7dcb11638b2f2ec7b829f6ab57
+            const chunkSize = BigInt(50_000); // 50k blocks at a time
+            const currentBlock = await publicClient.getBlockNumber();
+            for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
+                const toBlock = ((fromBlock + chunkSize) >= currentBlock) 
+                    ? currentBlock 
+                    : (fromBlock + chunkSize - BigInt(1));
+                console.debug(`Fetching logs from block ${fromBlock} to ${toBlock}`);
+                const logs = await publicClient.getContractEvents({
+                    abi: abi_distribution_verifier,
+                    address: deploymentAddress,
+                    fromBlock,
+                    toBlock,
+                    eventName: eventName,
+                    args: {
+                        queueNumber: queueNumber
+                    }
+                });
+                
+                allLogs = [...allLogs, ...logs];
+                console.debug(`Found ${logs.length} events in this chunk. Total: ${allLogs.length}`);
+            }
+            
+            console.debug("All logs fetched:", allLogs);
+            setEvents(allLogs);
         }
         fetchContractEvents()
     }, [queueNumber])

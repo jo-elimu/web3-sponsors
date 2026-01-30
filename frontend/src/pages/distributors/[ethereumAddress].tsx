@@ -2,7 +2,7 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
+import { abi as abi_distribution_queue } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, createPublicClient, formatEther, http } from "viem";
 import { sepolia } from "viem/chains";
@@ -64,23 +64,39 @@ export function LoadDistributionAddedEvents({ ethereumAddress }: {ethereumAddres
 
     const publicClient = createPublicClient({
         chain: sepolia,
-        transport: http("https://0xrpc.io/sep")
+        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
     useEffect(() => {
         async function fetchContractEvents() {
-            const logs = await publicClient.getContractEvents({
-                abi: abi,
-                address: deploymentAddress,
-                fromBlock: BigInt(9_779_634), // https://sepolia.etherscan.io/tx/0x745464abf22bd45b6e726d6c83aa211e30d1c24d9f902911aa67e6ff8cf1585c
-                eventName: "DistributionAdded",
-                args: {
-                    distributor: ethereumAddress
-                }
-            })
-            console.debug("logs:", logs)
-            setEvents(logs)
+            let allLogs: any[] = [];
+
+            const startBlock = BigInt(9_907_888); // https://sepolia.etherscan.io/tx/0x13219d5cb19b555e8f7ca875b4d03759c7eb087b162c92c4321dbc9115910668
+            const chunkSize = BigInt(50_000); // 50k blocks at a time
+            const currentBlock = await publicClient.getBlockNumber();
+            for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
+                const toBlock = ((fromBlock + chunkSize) >= currentBlock) 
+                    ? currentBlock 
+                    : (fromBlock + chunkSize - BigInt(1));
+                console.debug(`Fetching logs from block ${fromBlock} to ${toBlock}`);
+                const logs = await publicClient.getContractEvents({
+                    abi: abi_distribution_queue,
+                    address: deploymentAddress,
+                    fromBlock,
+                    toBlock,
+                    eventName: "DistributionAdded",
+                    args: {
+                        distributor: ethereumAddress
+                    }
+                });
+                
+                allLogs = [...allLogs, ...logs];
+                console.debug(`Found ${logs.length} events in this chunk. Total: ${allLogs.length}`);
+            }
+            
+            console.debug("All logs fetched:", allLogs);
+            setEvents(allLogs);
         }
         fetchContractEvents()
     }, [ethereumAddress])

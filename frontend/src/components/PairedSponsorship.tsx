@@ -16,20 +16,36 @@ export default function PairedSponsorship({ distributionQueueNumber }: { distrib
 
     const publicClient = createPublicClient({
         chain: sepolia,
-        transport: http("https://0xrpc.io/sep")
+        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
     useEffect(() => {
         async function fetchContractEvents() {
-            const logs = await publicClient.getContractEvents({
-                abi: abi_queue_handler,
-                address: deploymentAddress,
-                fromBlock: BigInt(9_760_219), // https://sepolia.etherscan.io/tx/0x01ea5a02fc320619f391757c038666722837e908c5094bef55b8a16824fb96e5
-                eventName: "QueuePairProcessed"
-            })
-            console.debug("logs:", logs)
-            setEvents(logs)
+            let allLogs: any[] = [];
+
+            const startBlock = BigInt(9_907_904); // https://sepolia.etherscan.io/tx/0x4ccdae0794c5061a019b8674d2117b22b3e85b343ece4390b2fb22eb41d76bc3
+            const chunkSize = BigInt(50_000); // 50k blocks at a time
+            const currentBlock = await publicClient.getBlockNumber();
+            for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
+                const toBlock = ((fromBlock + chunkSize) >= currentBlock) 
+                    ? currentBlock 
+                    : (fromBlock + chunkSize - BigInt(1));
+                console.debug(`Fetching logs from block ${fromBlock} to ${toBlock}`);
+                const logs = await publicClient.getContractEvents({
+                    abi: abi_queue_handler,
+                    address: deploymentAddress,
+                    fromBlock,
+                    toBlock,
+                    eventName: "QueuePairProcessed"
+                });
+                
+                allLogs = [...allLogs, ...logs];
+                console.debug(`Found ${logs.length} events in this chunk. Total: ${allLogs.length}`);
+            }
+            
+            console.debug("All logs fetched:", allLogs);
+            setEvents(allLogs);
         }
         fetchContractEvents()
     }, [])

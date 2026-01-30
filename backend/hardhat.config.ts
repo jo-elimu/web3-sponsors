@@ -20,11 +20,11 @@ const config: HardhatUserConfig = {
   },
   networks: {
     sepolia: { // Chain ID 11155111
-      url: "https://0xrpc.io/sep",
+      url: "https://ethereum-sepolia-rpc.publicnode.com",
       accounts: privateKeys
     },
     mainnet: { // Chain ID 1
-      url: "https://0xrpc.io/eth",
+      url: "https://ethereum-rpc.publicnode.com",
       accounts: privateKeys
     }
   },

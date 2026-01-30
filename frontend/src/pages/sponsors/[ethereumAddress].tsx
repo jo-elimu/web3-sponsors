@@ -2,7 +2,7 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { abi } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import { abi as abi_sponsorship_queue } from "../../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
 import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
 import { Address, createPublicClient, formatEther, http } from "viem";
 import { sepolia } from "viem/chains";
@@ -64,23 +64,39 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
 
     const publicClient = createPublicClient({
         chain: sepolia,
-        transport: http("https://0xrpc.io/sep")
+        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
     useEffect(() => {
         async function fetchContractEvents() {
-            const logs = await publicClient.getContractEvents({
-                abi: abi,
-                address: deploymentAddress,
-                fromBlock: BigInt(9_760_174), // https://sepolia.etherscan.io/tx/0xf6a2674e6c35787a620e914e52348189e1ed0b47b04b67a0170f611024da01de
-                eventName: "SponsorshipAdded",
-                args: {
-                    sponsor: ethereumAddress
-                }
-            })
-            console.debug("logs:", logs)
-            setEvents(logs)
+            let allLogs: any[] = [];
+
+            const startBlock = BigInt(9_907_880); // https://sepolia.etherscan.io/tx/0x12d1df9571a53d6b85911c1beae93f409c77a14d0f8e948a0021eb3f9da5e3d7
+            const chunkSize = BigInt(50_000); // 50k blocks at a time
+            const currentBlock = await publicClient.getBlockNumber();
+            for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
+                const toBlock = ((fromBlock + chunkSize) >= currentBlock) 
+                    ? currentBlock 
+                    : (fromBlock + chunkSize - BigInt(1));
+                console.debug(`Fetching logs from block ${fromBlock} to ${toBlock}`);
+                const logs = await publicClient.getContractEvents({
+                    abi: abi_sponsorship_queue,
+                    address: deploymentAddress,
+                    fromBlock,
+                    toBlock,
+                    eventName: "SponsorshipAdded",
+                    args: {
+                        sponsor: ethereumAddress
+                    }
+                });
+                
+                allLogs = [...allLogs, ...logs];
+                console.debug(`Found ${logs.length} events in this chunk. Total: ${allLogs.length}`);
+            }
+            
+            console.debug("All logs fetched:", allLogs);
+            setEvents(allLogs);
         }
         fetchContractEvents()
     }, [ethereumAddress])
