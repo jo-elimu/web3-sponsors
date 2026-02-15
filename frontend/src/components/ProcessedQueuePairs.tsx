@@ -1,6 +1,6 @@
 import { Address, createPublicClient, formatEther, http } from "viem"
-import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/chain-11155111/artifacts/QueueHandlerModule#QueueHandler.json"
-import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json"
+import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/QueueHandlerModule#QueueHandler.json"
+import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json"
 import { sepolia } from "viem/chains"
 import { useEffect, useState } from "react"
 import LoadingIndicator from "./LoadingIndicator"

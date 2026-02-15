@@ -1,8 +1,0 @@
-{
-  "SponsorshipQueueModule#SponsorshipQueue": "0xfc99678699eEcCB3c542Ad673801C8398450d038",
-  "DistributionQueueModule#DistributionQueue": "0xcCC411B4388B6C56e8DAF5e22666399c0E44D20a",
-  "DistributionVerifierModule#DistributionVerifier": "0x91d58eD405CBEd825d8499917C1A828A9E55D31c",
-  "QueueHandlerModule#QueueHandler": "0x99633CC860b63fF172522593f5C19B9b5915ae7f",
-  "CommunityFundModule#CommunityFund": "0x4ae401d77E979f9220E1396865A124a9A87Fed21",
-  "DistributionProcessorModule#DistributionProcessor": "0x414017C30cCf1c04300D74a0fdAcd41a6701A932"
-}

@@ -7,7 +7,7 @@ const privateKeys = process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.30",
+    version: "0.8.33",
     settings: {
       optimizer: {
         enabled: true
@@ -19,11 +19,11 @@ const config: HardhatUserConfig = {
     outputFile: "hardhat-gas-report.md"
   },
   networks: {
-    sepolia: { // Chain ID 11155111
+    sepolia: {
       url: "https://ethereum-sepolia-rpc.publicnode.com",
       accounts: privateKeys
     },
-    mainnet: { // Chain ID 1
+    mainnet: {
       url: "https://ethereum-rpc.publicnode.com",
       accounts: privateKeys
     }

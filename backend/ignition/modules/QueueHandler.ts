@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import { ethers, network } from "hardhat";
-import deployed_addresses_sepolia from "../../ignition/deployments/chain-11155111/deployed_addresses.json";
+import deployed_addresses_sepolia from "../deployments/sepolia_v0-9-8/deployed_addresses.json";
 
 const QueueHandlerModule = buildModule("QueueHandlerModule", (m) => {
   console.log("network.name:", network.name);
@@ -9,7 +9,7 @@ const QueueHandlerModule = buildModule("QueueHandlerModule", (m) => {
   if (network.name == "sepolia") {
     sponsorshipQueueAddress = deployed_addresses_sepolia["SponsorshipQueueModule#SponsorshipQueue"];
   } else if (network.name == "mainnet") {
-    // TODO: ./ignition/deployments/chain-1/deployed_addresses.json
+    // TODO: ./ignition/deployments/mainnet-v?-?-?/deployed_addresses.json
   }
   console.log("sponsorshipQueueAddress:", sponsorshipQueueAddress);
 
@@ -17,7 +17,7 @@ const QueueHandlerModule = buildModule("QueueHandlerModule", (m) => {
   if (network.name == "sepolia") {
     distributionQueueAddress = deployed_addresses_sepolia["DistributionQueueModule#DistributionQueue"];
   } else if (network.name == "mainnet") {
-    // TODO: ./ignition/deployments/chain-1/deployed_addresses.json
+    // TODO: ./ignition/deployments/mainnet-v?-?-?/deployed_addresses.json
   }
   console.log("distributionQueueAddress:", distributionQueueAddress);
 
@@ -25,7 +25,7 @@ const QueueHandlerModule = buildModule("QueueHandlerModule", (m) => {
   if (network.name == "sepolia") {
     distributionVerifierAddress = deployed_addresses_sepolia["DistributionVerifierModule#DistributionVerifier"];
   } else if (network.name == "mainnet") {
-    // TODO: ./ignition/deployments/chain-1/deployed_addresses.json
+    // TODO: ./ignition/deployments/mainnet-v?-?-?/deployed_addresses.json
   }
   console.log("distributionVerifierAddress:", distributionVerifierAddress);
   

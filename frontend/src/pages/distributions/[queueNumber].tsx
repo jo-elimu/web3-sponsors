@@ -4,7 +4,7 @@ import DistributionSummary from "@/components/DistributionSummary";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Verifications from "@/components/Verifications";
-import deployed_addresses from "../../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
 import { Address } from "viem";
 import Link from "next/link";
 import PairedSponsorship from "@/components/PairedSponsorship";

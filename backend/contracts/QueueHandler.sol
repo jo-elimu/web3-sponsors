@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
+pragma solidity ^0.8.33;
 
 import { Sponsorship, SponsorshipQueue } from "./SponsorshipQueue.sol";
 import { Distribution, DistributionQueue } from "./DistributionQueue.sol";

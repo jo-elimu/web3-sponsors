@@ -17,9 +17,9 @@ node_modules
 ignition/deployments/chain-31337
 
 # Ethereum Sepolia
-ignition/deployments/chain-11155111/artifacts/*.dbg.json
-ignition/deployments/chain-11155111/build-info
+ignition/deployments/sepolia_v*/artifacts/*.dbg.json
+ignition/deployments/sepolia_v*/build-info
 
 # Ethereum Mainnet
-ignition/deployments/chain-1/artifacts/*.dbg.json
-ignition/deployments/chain-1/build-info
+ignition/deployments/mainnet_v*/artifacts/*.dbg.json
+ignition/deployments/mainnet_v*/build-info

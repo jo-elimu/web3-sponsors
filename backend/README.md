@@ -16,7 +16,7 @@ npx hardhat coverage
 npx istanbul check-coverage --lines 80
 ```
 
-Deployment:
+Deploying:
 
 Hardhat (`localhost`)
 ```shell
@@ -29,19 +29,30 @@ npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network hardha
 npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network hardhat
 ```
 
-Ethereum Sepolia (Chain ID `11155111`)
+Ethereum Sepolia
+> [!IMPORTANT]
+> _Before_ running the commands below, bump the version in these files:
+> - [`./package.json`](./package.json)
+> - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
-npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --reset --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network sepolia --verify
-npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network sepolia --verify
+npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts  --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 
-npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network sepolia --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --verify
+npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network sepolia --deployment-id sepolia_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 ```
-[`./ignition/deployments/chain-11155111/deployed_addresses.json`](./ignition/deployments/chain-11155111/deployed_addresses.json)
 
-Ethereum Mainnet (Chain ID `1`)
+Deployed addresses:
+- [`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
+- [`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
+
+Ethereum Mainnet
+> [!IMPORTANT]
+> _Before_ running the commands below, bump the version in these files:
+> - [`./package.json`](./package.json)
+> - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
 npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network mainnet --reset --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --verify
@@ -51,7 +62,6 @@ npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet
 npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network mainnet --verify
 npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network mainnet --verify
 ```
-[`./ignition/deployments/chain-1/deployed_addresses.json`](./ignition/deployments/chain-1/deployed_addresses.json)
 
 > [!NOTE]
 > After deploying the `QueueHandler`, remember to update its address in the `SponsorshipQueue` and `DistributionQueue`.

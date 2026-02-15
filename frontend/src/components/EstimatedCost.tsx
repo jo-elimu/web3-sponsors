@@ -1,7 +1,7 @@
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { useReadContract } from "wagmi";
-import { abi } from "../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
+import { abi } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
 import { Address, formatEther, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 

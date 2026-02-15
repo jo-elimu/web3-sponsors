@@ -26,7 +26,7 @@ export default function Home() {
         </h1>
 
         <div className="text-4xl mt-8">
-          Sponsor the education of out-of-school children
+          Sponsor the education of an out-of-school child
         </div>
 
         <Link href="/sponsorships/add" className="mt-8 shadow-lg shadow-purple-500/100">

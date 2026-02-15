@@ -1,5 +1,5 @@
-import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
-import { abi } from "../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionVerifierModule#DistributionVerifier.json";
+import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionVerifierModule#DistributionVerifier.json";
 import { Address } from "viem";
 import { useReadContract } from "wagmi";
 import LoadingIndicator from "./LoadingIndicator";

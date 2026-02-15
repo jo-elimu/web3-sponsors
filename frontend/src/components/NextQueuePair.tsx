@@ -1,8 +1,8 @@
 import { useReadContract, useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { abi as abi_sponsorship_queue } from "../../../backend/ignition/deployments/chain-11155111/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import { abi as abi_distribution_queue } from "../../../backend/ignition/deployments/chain-11155111/artifacts/DistributionQueueModule#DistributionQueue.json";
-import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/chain-11155111/artifacts/QueueHandlerModule#QueueHandler.json"
-import deployed_addresses from "../../../backend/ignition/deployments/chain-11155111/deployed_addresses.json";
+import { abi as abi_sponsorship_queue } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import { abi as abi_distribution_queue } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionQueueModule#DistributionQueue.json";
+import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/QueueHandlerModule#QueueHandler.json"
+import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
