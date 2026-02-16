@@ -44,7 +44,7 @@ contract QueueHandler is ProtocolVersion, Ownable {
         require(sponsorshipQueue.getLength() > 0, "The sponsorship queue cannot be empty");
 
         // Remove the distribution from the queue
-        Distribution memory distribution = distributionQueue.dequeue();
+        Distribution memory distribution = distributionQueue.dequeue(false);
 
         // Remove the sponsorship from the queue
         uint24 sponsorshipQueueNumber = sponsorshipQueue.queueNumberFront();
@@ -68,7 +68,7 @@ contract QueueHandler is ProtocolVersion, Ownable {
         require(isDistributionRejected, "Only rejected distributions can be removed from the queue");
 
         // Remove the distribution from the queue
-        distributionQueue.dequeue();
+        distributionQueue.dequeue(true);
 
         // Emit event
         emit RejectedDistributionRemoved(distributionQueueNumber, msg.sender);

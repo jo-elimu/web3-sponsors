@@ -73,6 +73,14 @@ describe("DistributionQueue", function () {
         .to.be.revertedWithCustomError(distributionQueue, "InvalidLanguageCode");
     });
 
+    it ("Should revert with an error if duplicate Android ID", async function () {
+      const { distributionQueue } = await loadFixture(deployFixture);
+
+      await distributionQueue.addDistribution("HIN", "fbc880caac090c43");
+      await expect(distributionQueue.addDistribution("HIN", "fbc880caac090c43"))
+        .to.be.revertedWithCustomError(distributionQueue, "DuplicateAndroidId");
+    });
+
     it("Should emit an event on addDistribution", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
 
