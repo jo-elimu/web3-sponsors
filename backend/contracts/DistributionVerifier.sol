@@ -4,33 +4,24 @@ pragma solidity ^0.8.33;
 import { IRoles } from "@elimu-ai/dao-contracts/IRoles.sol";
 import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
 import { ProtocolVersion } from "./util/ProtocolVersion.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @notice Handles approval/rejection of distributions added to `DistributionQueue.sol`
-contract DistributionVerifier is IDistributionVerifier, ProtocolVersion {
-    address public owner;
+contract DistributionVerifier is IDistributionVerifier, ProtocolVersion, Ownable {
     IRoles public roles;
     mapping(uint24 => uint8) public approvalCount;
     mapping(uint24 => uint8) public rejectionCount;
     mapping(uint24 => mapping(address => bool)) verifications;
 
-    event OwnerUpdated(address owner);
     event RolesUpdated(address roles);
     event DistributionApproved(uint24 queueNumber, address indexed operator);
     event DistributionRejected(uint24 queueNumber, address indexed operator);
 
-    constructor(address roles_) {
-        owner = msg.sender;
+    constructor(address roles_) Ownable(msg.sender) {
         roles = IRoles(roles_);
     }
 
-    function updateOwner(address owner_) public {
-        require(msg.sender == owner, "Only the current owner can set a new owner");
-        owner = owner_;
-        emit OwnerUpdated(owner_);
-    }
-
-    function updateRoles(address roles_) public {
-        require(msg.sender == owner, "Only the owner can set the `roles` address");
+    function updateRoles(address roles_) public onlyOwner {
         roles = IRoles(roles_);
         emit RolesUpdated(roles_);
     }

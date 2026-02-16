@@ -4,6 +4,7 @@ pragma solidity ^0.8.33;
 import { IDistributionQueue } from "./interface/IDistributionQueue.sol";
 import { ILanguages } from "@elimu-ai/dao-contracts/ILanguages.sol";
 import { ProtocolVersion } from "./util/ProtocolVersion.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 struct Distribution {
     string languageCode;
@@ -13,40 +14,29 @@ struct Distribution {
 }
 
 /// @notice A queue of distributions for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
-contract DistributionQueue is IDistributionQueue, ProtocolVersion {
-    address public owner;
+contract DistributionQueue is IDistributionQueue, ProtocolVersion, Ownable {
     ILanguages public languages;
     address public queueHandler;
     mapping(uint24 => Distribution) public queue;
     uint24 public queueNumberFront = 1;
     uint24 public queueNumberNext = 1;
-
-    event OwnerUpdated(address);
+    
     event LanguagesUpdated(address);
     event QueueHandlerUpdated(address);
     event DistributionAdded(uint24 queueNumber, address indexed distributor);
 
     error InvalidLanguageCode();
 
-    constructor(address languages_) {
-        owner = msg.sender;
+    constructor(address languages_) Ownable(msg.sender) {
         languages = ILanguages(languages_);
     }
 
-    function updateOwner(address owner_) public {
-        require(msg.sender == owner, "Only the current owner can set a new owner");
-        owner = owner_;
-        emit OwnerUpdated(owner_);
-    }
-
-    function updateLanguages(address languages_) public {
-        require(msg.sender == owner, "Only the owner can set the `languages` address");
+    function updateLanguages(address languages_) public onlyOwner {
         languages = ILanguages(languages_);
         emit LanguagesUpdated(languages_);
     }
 
-    function updateQueueHandler(address queueHandler_) public {
-        require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
+    function updateQueueHandler(address queueHandler_) public onlyOwner {
         queueHandler = queueHandler_;
         emit QueueHandlerUpdated(queueHandler_);
     }

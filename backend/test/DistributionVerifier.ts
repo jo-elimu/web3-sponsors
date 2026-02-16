@@ -39,6 +39,11 @@ describe("DistributionVerifier", function () {
 
       expect(await distributionVerifier.roles()).to.equal(await roles.getAddress());
     });
+
+    it("Should set the correct protocol version", async function () {
+      const { distributionVerifier } = await loadFixture(deployFixture);
+      expect(await distributionVerifier.protocolVersion()).to.equal("0.9.8");
+    });
   });
 
   describe("Update owner address", function () {
@@ -46,7 +51,7 @@ describe("DistributionVerifier", function () {
       const { distributionVerifier, account1, account2 } = await loadFixture(deployFixture);
 
       expect(await distributionVerifier.owner()).to.equal(account1.address);
-      await distributionVerifier.updateOwner(account2.address);
+      await distributionVerifier.transferOwnership(account2.address);
       expect(await distributionVerifier.owner()).to.equal(account2.address);
     });
   });

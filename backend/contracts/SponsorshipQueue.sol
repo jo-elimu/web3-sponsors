@@ -3,6 +3,7 @@ pragma solidity ^0.8.33;
 
 import { ISponsorshipQueue } from "./interface/ISponsorshipQueue.sol";
 import { ProtocolVersion } from "./util/ProtocolVersion.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 struct Sponsorship {
     uint256 estimatedCost;
@@ -14,44 +15,31 @@ struct Sponsorship {
 /// @author Ξlimu DAO
 /// @notice A queue of sponsorships for the Ξlimu DAO's education sponsorship program (https://sponsors.elimu.ai)
 /// @dev The address of the queue handler smart contract needs to be set after deployment
-contract SponsorshipQueue is ISponsorshipQueue, ProtocolVersion {
-    address public owner;
+contract SponsorshipQueue is ISponsorshipQueue, ProtocolVersion, Ownable {
     uint256 public estimatedCost;
     address public queueHandler;
     mapping(uint24 => Sponsorship) public queue;
     uint24 public queueNumberFront = 1;
     uint24 public queueNumberNext = 1;
 
-    event OwnerUpdated(address);
     event EstimatedCostUpdated(uint256);
     event QueueHandlerUpdated(address);
     event SponsorshipAdded(uint24 queueNumber, address indexed sponsor);
 
-    constructor(uint256 estimatedCost_) {
-        owner = msg.sender;
+    constructor(uint256 estimatedCost_) Ownable(msg.sender) {
         estimatedCost = estimatedCost_;
-    }
-
-    /// @notice Change the owner of this smart contract
-    /// @param owner_ The address of the new owner
-    function updateOwner(address owner_) public {
-        require(msg.sender == owner, "Only the current owner can set a new owner");
-        owner = owner_;
-        emit OwnerUpdated(owner_);
     }
 
     /// @notice Update the amount that a sponsor will have to pay
     /// @param estimatedCost_ The new estimated cost
-    function updateEstimatedCost(uint256 estimatedCost_) public {
-        require(msg.sender == owner, "Only the owner can set the `estimatedCost`");
+    function updateEstimatedCost(uint256 estimatedCost_) public onlyOwner {
         estimatedCost = estimatedCost_;
         emit EstimatedCostUpdated(estimatedCost_);
     }
 
     /// @notice Change the handler of this queue
     /// @param queueHandler_ The address of the new queue handler smart contract
-    function updateQueueHandler(address queueHandler_) public {
-        require(msg.sender == owner, "Only the owner can set the `queueHandler` address");
+    function updateQueueHandler(address queueHandler_) public onlyOwner {
         queueHandler = queueHandler_;
         emit QueueHandlerUpdated(queueHandler_);
     }

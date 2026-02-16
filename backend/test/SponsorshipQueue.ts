@@ -34,6 +34,11 @@ describe("SponsorshipQueue", function () {
 
       expect(await sponsorshipQueue.owner()).to.equal(account1.address);
     });
+
+    it("Should set the correct protocol version", async function () {
+      const { sponsorshipQueue } = await loadFixture(deployFixture);
+      expect(await sponsorshipQueue.protocolVersion()).to.equal("0.9.8");
+    });
   });
 
   describe("Update owner address", function () {
@@ -41,7 +46,7 @@ describe("SponsorshipQueue", function () {
       const { sponsorshipQueue, account1, account2 } = await loadFixture(deployFixture);
 
       expect(await sponsorshipQueue.owner()).to.equal(account1.address);
-      await sponsorshipQueue.updateOwner(account2.address);
+      await sponsorshipQueue.transferOwnership(account2.address);
       expect(await sponsorshipQueue.owner()).to.equal(account2.address);
     });
   });

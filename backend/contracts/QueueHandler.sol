@@ -5,35 +5,26 @@ import { Sponsorship, SponsorshipQueue } from "./SponsorshipQueue.sol";
 import { Distribution, DistributionQueue } from "./DistributionQueue.sol";
 import { IDistributionVerifier } from "./interface/IDistributionVerifier.sol";
 import { ProtocolVersion } from "./util/ProtocolVersion.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @notice Handles pairing of sponsorships with distributions
-contract QueueHandler is ProtocolVersion {
-    address public owner;
+contract QueueHandler is ProtocolVersion, Ownable {
     SponsorshipQueue public immutable sponsorshipQueue;
     DistributionQueue public immutable distributionQueue;
     IDistributionVerifier public distributionVerifier;
 
-    event OwnerUpdated(address);
     event RolesUpdated(address);
     event DistributionVerifierUpdated(address);
     event QueuePairProcessed(uint24 distributionQueueNumber, uint24 sponsorshipQueueNumber, address indexed operator);
     event RejectedDistributionRemoved(uint24 queueNumber, address indexed operator);
 
-    constructor(address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) {
-        owner = msg.sender;
+    constructor(address sponsorshipQueue_, address distributionQueue_, address distributionVerifier_) Ownable(msg.sender){
         sponsorshipQueue = SponsorshipQueue(sponsorshipQueue_);
         distributionQueue = DistributionQueue(distributionQueue_);
         distributionVerifier = IDistributionVerifier(distributionVerifier_);
     }
 
-    function updateOwner(address owner_) public {
-        require(msg.sender == owner, "Only the current owner can set a new owner");
-        owner = owner_;
-        emit OwnerUpdated(owner_);
-    }
-
-    function updateDistributionVerifier(address distributionVerifier_) public {
-        require(msg.sender == owner, "Only the owner can set the `distributionVerifier` address");
+    function updateDistributionVerifier(address distributionVerifier_) public onlyOwner {
         distributionVerifier = IDistributionVerifier(distributionVerifier_);
         emit DistributionVerifierUpdated(distributionVerifier_);
     }

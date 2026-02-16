@@ -2,8 +2,9 @@
 pragma solidity ^0.8.33;
 
 import { IDistributionQueue } from "@elimu-ai/sponsors/IDistributionQueue.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DistributionImporter {
+contract DistributionImporter is Ownable {
     IDistributionQueue public immutable distributionQueue;
 
     string[] public languageCodes;
@@ -12,7 +13,7 @@ contract DistributionImporter {
     event DistributionImported(address indexed importer, string languageCode, string androidId);
     event DistributionsProcessed(address indexed processor, uint256 count);
 
-    constructor(address distributionQueue_) {
+    constructor(address distributionQueue_) Ownable(msg.sender) {
         distributionQueue = IDistributionQueue(distributionQueue_);
     }
 

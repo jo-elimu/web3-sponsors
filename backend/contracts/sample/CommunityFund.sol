@@ -2,15 +2,16 @@
 pragma solidity ^0.8.33;
 
 import { ISponsorshipQueue } from "@elimu-ai/sponsors/ISponsorshipQueue.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract CommunityFund {
+contract CommunityFund is Ownable {
     ISponsorshipQueue public immutable sponsorshipQueue;
 
     event Received(address, uint256);
 
     error InsufficientFunds(uint256);
 
-    constructor(address sponsorshipQueue_) {
+    constructor(address sponsorshipQueue_) Ownable(msg.sender) {
         sponsorshipQueue = ISponsorshipQueue(sponsorshipQueue_);
     }
 
