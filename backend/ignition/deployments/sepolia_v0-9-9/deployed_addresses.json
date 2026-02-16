@@ -1,0 +1,8 @@
+{
+  "SponsorshipQueueModule#SponsorshipQueue": "0xB149F054b2F084a4dd6E89011C4818083b0846Ae",
+  "DistributionQueueModule#DistributionQueue": "0x974D621D74906dd42D7C3346F8865924eF1d2872",
+  "DistributionVerifierModule#DistributionVerifier": "0xb2a7c096067323D5E14104D59E9224D80003d2e4",
+  "QueueHandlerModule#QueueHandler": "0x9C2276FC596A70C45Cefefa37Dbf32cb788175cb",
+  "CommunityFundModule#CommunityFund": "0x2fD5b3B1E8CF5146534fac3885405e89C8834dCf",
+  "DistributionImporterModule#DistributionImporter": "0xBA36805dce6B51CAc0b3F260b4c98CD115FC825C"
+}

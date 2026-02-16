@@ -1,0 +1,6 @@
+{
+  "SponsorshipQueueModule#SponsorshipQueue": "0xd0F6F372Ae2b640AE3b3875100Ce301d66f74607",
+  "DistributionQueueModule#DistributionQueue": "0xA8a3D53AC04D91BaA6105E453eb46Ce2E2a14c77",
+  "DistributionVerifierModule#DistributionVerifier": "0xed7FaF4cBB44dF170FBaf5Bf87aA6B8889fe8923",
+  "QueueHandlerModule#QueueHandler": "0xBdeA10f276eeA466E8F1d3D4da1B9C355EdeE6e3"
+}

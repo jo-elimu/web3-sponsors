@@ -63,7 +63,7 @@ describe("QueueHandler", function () {
 
     it("Should set the correct protocol version", async function () {
       const { queueHandler } = await loadFixture(deployFixture);
-      expect(await queueHandler.protocolVersion()).to.equal("0.9.8");
+      expect(await queueHandler.protocolVersion()).to.equal("0.9.9");
     });
   });
 

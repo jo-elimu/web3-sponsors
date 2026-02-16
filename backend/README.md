@@ -47,6 +47,7 @@ npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network
 Deployed addresses:
 - [`./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-7/deployed_addresses.json)
 - [`./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-8/deployed_addresses.json)
+- [`./ignition/deployments/sepolia_v0-9-9/deployed_addresses.json`](./ignition/deployments/sepolia_v0-9-9/deployed_addresses.json)
 
 Ethereum Mainnet
 > [!IMPORTANT]
@@ -54,14 +55,14 @@ Ethereum Mainnet
 > - [`./package.json`](./package.json)
 > - [`./contracts/util/ProtocolVersion.sol`](./contracts/util/ProtocolVersion.sol)
 ```shell
-npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network mainnet --reset --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network mainnet --verify
-npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts --network mainnet --verify
-
-npx hardhat ignition deploy ./ignition/modules/CommunityFund.ts --network mainnet --verify
-npx hardhat ignition deploy ./ignition/modules/DistributionImporter.ts --network mainnet --verify
+npx hardhat ignition deploy ./ignition/modules/SponsorshipQueue.ts --network mainnet --deployment-id mainnet_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionQueue.ts --network mainnet --deployment-id mainnet_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/DistributionVerifier.ts --network mainnet --deployment-id mainnet_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
+npx hardhat ignition deploy ./ignition/modules/QueueHandler.ts  --network mainnet --deployment-id mainnet_v$(node -p "require('./package.json').version.replace(/\./g, '-')") --verify
 ```
+
+Deployed addresses:
+- [`./ignition/deployments/mainnet_v0-9-9/deployed_addresses.json`](./ignition/deployments/mainnet_v0-9-9/deployed_addresses.json)
 
 > [!NOTE]
 > After deploying the `QueueHandler`, remember to update its address in the `SponsorshipQueue` and `DistributionQueue`.

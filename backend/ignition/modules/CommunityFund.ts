@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import { ethers, network } from "hardhat";
-import deployed_addresses_sepolia from "../deployments/sepolia_v0-9-8/deployed_addresses.json";
+import deployed_addresses_sepolia from "../deployments/sepolia_v0-9-9/deployed_addresses.json";
 
 const CommunityFundModule = buildModule("CommunityFundModule", (m) => {
   console.log("network.name:", network.name);

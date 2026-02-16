@@ -37,7 +37,7 @@ describe("SponsorshipQueue", function () {
 
     it("Should set the correct protocol version", async function () {
       const { sponsorshipQueue } = await loadFixture(deployFixture);
-      expect(await sponsorshipQueue.protocolVersion()).to.equal("0.9.8");
+      expect(await sponsorshipQueue.protocolVersion()).to.equal("0.9.9");
     });
   });
 

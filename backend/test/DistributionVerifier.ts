@@ -42,7 +42,7 @@ describe("DistributionVerifier", function () {
 
     it("Should set the correct protocol version", async function () {
       const { distributionVerifier } = await loadFixture(deployFixture);
-      expect(await distributionVerifier.protocolVersion()).to.equal("0.9.8");
+      expect(await distributionVerifier.protocolVersion()).to.equal("0.9.9");
     });
   });
 

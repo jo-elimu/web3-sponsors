@@ -31,7 +31,7 @@ describe("DistributionQueue", function () {
 
     it("Should set the correct protocol version", async function () {
       const { distributionQueue } = await loadFixture(deployFixture);
-      expect(await distributionQueue.protocolVersion()).to.equal("0.9.8");
+      expect(await distributionQueue.protocolVersion()).to.equal("0.9.9");
     });
   });
 
