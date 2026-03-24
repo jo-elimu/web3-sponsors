@@ -1,7 +1,7 @@
 import { Address, createPublicClient, formatEther, http } from "viem"
-import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/QueueHandlerModule#QueueHandler.json"
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json"
-import { sepolia } from "viem/chains"
+import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/QueueHandlerModule#QueueHandler.json"
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json"
+import { mainnet } from "viem/chains"
 import { useEffect, useState } from "react"
 import LoadingIndicator from "./LoadingIndicator"
 import Link from "next/link"
@@ -19,8 +19,8 @@ function LoadQueuePairProcessedEvents() {
     console.debug("deploymentAddress:", deploymentAddress);
 
     const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
+        chain: mainnet,
+        transport: http("https://ethereum-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
@@ -28,7 +28,7 @@ function LoadQueuePairProcessedEvents() {
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_904); // https://sepolia.etherscan.io/tx/0x4ccdae0794c5061a019b8674d2117b22b3e85b343ece4390b2fb22eb41d76bc3
+            const startBlock = BigInt(24_470_279); // https://etherscan.io/tx/0x479fca44e2bc9afcaab1681dbf2b9294e2cf3f2764bcd9146055cd729610af7f
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
@@ -64,7 +64,7 @@ function LoadQueuePairProcessedEvents() {
         events.map((el, i) =>
             <div key={i} className="mt-4 p-4 text-2xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
                 <div className="text-zinc-400">
-                    Block: <Link className="text-purple-600" href={`https://sepolia.etherscan.io/tx/${el.transactionHash}`} target="_blank">#{Number(el.blockNumber)}</Link> ({new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(11,16)})
+                    Block: <Link className="text-purple-600" href={`https://etherscan.io/tx/${el.transactionHash}`} target="_blank">#{Number(el.blockNumber)}</Link> ({new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(0,10)} {new Date(Number(el.blockTimestamp) * 1_000).toISOString().substring(11,16)})
                 </div>
                 <div className="mt-4 flex gap-x-4">
                     <Link href={`/sponsorships/${el.args.sponsorshipQueueNumber}`} className="text-purple-600">

@@ -1,8 +1,8 @@
 import { Address, createPublicClient, http } from "viem";
-import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/QueueHandlerModule#QueueHandler.json"
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json"
+import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/QueueHandlerModule#QueueHandler.json"
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json"
 import LoadingIndicator from "@/components/LoadingIndicator";
-import { sepolia } from "viem/chains";
+import { mainnet } from "viem/chains";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -15,8 +15,8 @@ export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsor
     console.debug("deploymentAddress:", deploymentAddress)
 
     const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
+        chain: mainnet,
+        transport: http("https://ethereum-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
@@ -24,7 +24,7 @@ export default function PairedDistribution({ sponsorshipQueueNumber }: { sponsor
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_904); // https://sepolia.etherscan.io/tx/0x4ccdae0794c5061a019b8674d2117b22b3e85b343ece4390b2fb22eb41d76bc3
+            const startBlock = BigInt(24_470_279); // https://etherscan.io/tx/0x479fca44e2bc9afcaab1681dbf2b9294e2cf3f2764bcd9146055cd729610af7f
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {

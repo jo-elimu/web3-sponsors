@@ -1,6 +1,6 @@
 import { useReadContract } from "wagmi";
-import { abi } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionQueueModule#DistributionQueue.json";
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/DistributionQueueModule#DistributionQueue.json";
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address, formatEther } from "viem";
 import ErrorIndicator from "./ErrorIndicator";

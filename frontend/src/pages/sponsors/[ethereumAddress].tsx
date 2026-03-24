@@ -2,10 +2,10 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { abi as abi_sponsorship_queue } from "../../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi as abi_sponsorship_queue } from "../../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address, createPublicClient, formatEther, http } from "viem";
-import { sepolia } from "viem/chains";
+import { mainnet } from "viem/chains";
 import { useEffect, useState } from "react";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import Link from "next/link";
@@ -63,8 +63,8 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
     console.debug("deploymentAddress:", deploymentAddress)
 
     const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
+        chain: mainnet,
+        transport: http("https://ethereum-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
@@ -72,7 +72,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_880); // https://sepolia.etherscan.io/tx/0x12d1df9571a53d6b85911c1beae93f409c77a14d0f8e948a0021eb3f9da5e3d7
+            const startBlock = BigInt(24_470_201); // https://etherscan.io/tx/0xb55bf4d0fb7e32877ab9d132ec62bbbd5b882e3b0408244c3ed2b5d08bacdca9
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {
@@ -122,7 +122,7 @@ export function LoadSponsorshipAddedEvents({ ethereumAddress }: {ethereumAddress
                     <tr key={i}>
                         <td className="bg-zinc-800 text-zinc-400 p-2 rounded-md">
                             {new Date(el.blockTimestamp * 1_000).toISOString().substring(0,10)} {new Date(el.blockTimestamp * 1_000).toISOString().substring(11,16)}
-                            <Link className="ml-2 text-purple-600" href={`https://sepolia.etherscan.io/tx/${el.transactionHash}`} target="_blank">
+                            <Link className="ml-2 text-purple-600" href={`https://etherscan.io/tx/${el.transactionHash}`} target="_blank">
                                 Tx ↗
                             </Link>
                         </td>

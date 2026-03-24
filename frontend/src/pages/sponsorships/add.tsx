@@ -3,8 +3,8 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useReadContract, useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi } from "../../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address, formatEther, parseEther } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 import EstimatedCost from "@/components/EstimatedCost";
@@ -180,7 +180,7 @@ export function WriteContractButton({ estimatedCost }: { estimatedCost: bigint }
           <LoadingIndicator /> &nbsp; Finalizing... ⏳
         </button>
         <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
-          <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+          <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
             View on Etherscan ↗
           </Link>
         </div>
@@ -190,7 +190,7 @@ export function WriteContractButton({ estimatedCost }: { estimatedCost: bigint }
     return (
       <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
         🎉 Your sponsorship has been added successfully! 🎉<br />
-        <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+        <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
           View on Etherscan ↗
         </Link>
       </div>

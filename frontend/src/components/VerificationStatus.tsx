@@ -1,5 +1,5 @@
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
-import { abi } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionVerifierModule#DistributionVerifier.json";
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
+import { abi } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/DistributionVerifierModule#DistributionVerifier.json";
 import { Address } from "viem";
 import { useReadContract } from "wagmi";
 import LoadingIndicator from "./LoadingIndicator";
@@ -95,7 +95,7 @@ export function LoadIsDistributionRejected({ queueNumber } : { queueNumber: numb
                     Verification: <code className="ml-2 font-bold bg-orange-900 px-2 py-1 rounded-lg">REJECTED🟠</code>
                 </span>
                 <div className="pt-2 text-sm">
-                    <Link className="text-orange-700" href={`https://sepolia.etherscan.io/address/${deploymentAddressQueueHandler}#writeContract#F2`} target="_blank">
+                    <Link className="text-orange-700" href={`https://etherscan.io/address/${deploymentAddressQueueHandler}#writeContract#F2`} target="_blank">
                         Remove from queue ↗
                     </Link>
                 </div>

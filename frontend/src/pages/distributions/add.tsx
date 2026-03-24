@@ -3,8 +3,8 @@ import MainFooter from "@/components/MainFooter";
 import MainHeader from "@/components/MainHeader";
 import Head from "next/head";
 import { useAccount, useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { abi } from "../../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionQueueModule#DistributionQueue.json";
-import deployed_addresses from "../../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi } from "../../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/DistributionQueueModule#DistributionQueue.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address } from "viem";
 import ErrorIndicator from "@/components/ErrorIndicator";
 import { useState } from "react";
@@ -195,7 +195,7 @@ export function WriteContractButton({ languageCode, androidId}: any) {
           <LoadingIndicator /> &nbsp; Finalizing... ⏳
         </button>
         <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
-          <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+          <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
             View on Etherscan ↗
           </Link>
         </div>
@@ -205,7 +205,7 @@ export function WriteContractButton({ languageCode, androidId}: any) {
     return (
       <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
         🎉 Your distribution has been added successfully! 🎉<br />
-        <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+        <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
           View on Etherscan ↗
         </Link>
       </div>

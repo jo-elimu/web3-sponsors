@@ -8,6 +8,23 @@ URL: https://sponsors.elimu.ai
 
 [![](https://github.com/user-attachments/assets/993078ab-3e26-465b-a138-b18be71574d0)](https://sponsors.elimu.ai)
 
+## Verification Workflow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Distributor->>DAO_Operator: Verify my distribution
+    loop Verification
+        DAO_Operator->>DAO_Operator: Verify details of the distribution
+    end
+    Note right of DAO_Operator: Approve/reject distribution
+    DAO_Operator-->>Distributor: Distribution rejected
+    DAO_Operator->>Sponsor: Pay sponsorship to approved distribution
+```
+
+> [!NOTE]
+> For information on how to get the _DAO Operator_ role, see [`TOKENOMICS.md`](https://github.com/elimu-ai/web3-wiki/blob/main/TOKENOMICS.md#dao-operator-).
+
 ---
 
 <p align="center">

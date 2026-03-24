@@ -4,7 +4,7 @@ import DistributionSummary from "@/components/DistributionSummary";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Verifications from "@/components/Verifications";
-import deployed_addresses from "../../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import deployed_addresses from "../../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address } from "viem";
 import Link from "next/link";
 import PairedSponsorship from "@/components/PairedSponsorship";
@@ -40,7 +40,7 @@ export default function DistributionDetails() {
         </div>
 
         <div className="mt-8">
-          <Link className="text-purple-600" href={`https://sepolia.etherscan.io/address/${deploymentAddress}#writeContract#F3`} target="_blank">
+          <Link className="text-purple-600" href={`https://etherscan.io/address/${deploymentAddress}#writeContract#F4`} target="_blank">
             Add verification ↗
           </Link>
         </div>

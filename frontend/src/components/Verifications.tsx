@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { abi as abi_distribution_verifier } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionVerifierModule#DistributionVerifier.json";
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi as abi_distribution_verifier } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/DistributionVerifierModule#DistributionVerifier.json";
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import { Address, createPublicClient, http } from "viem";
-import { sepolia } from "viem/chains";
+import { mainnet } from "viem/chains";
 import LoadingIndicator from "./LoadingIndicator";
 
 export default function Verifications({ queueNumber, eventName }: { queueNumber: number, eventName: string }) {
@@ -15,8 +15,8 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
     console.debug("deploymentAddress:", deploymentAddress);
 
     const publicClient = createPublicClient({
-        chain: sepolia,
-        transport: http("https://ethereum-sepolia-rpc.publicnode.com") // Max 50k blocks per request
+        chain: mainnet,
+        transport: http("https://ethereum-rpc.publicnode.com") // Max 50k blocks per request
     })
 
     const [events, setEvents] = useState(Array(0))
@@ -24,7 +24,7 @@ export default function Verifications({ queueNumber, eventName }: { queueNumber:
         async function fetchContractEvents() {
             let allLogs: any[] = [];
 
-            const startBlock = BigInt(9_907_896); // https://sepolia.etherscan.io/tx/0xb087a52b94f22eb49b7b288e7a8371241e0e5d7dcb11638b2f2ec7b829f6ab57
+            const startBlock = BigInt(24_470_251); // https://etherscan.io/tx/0x681a7a527160bf5077597a73f4798a76297bde0731269b9eeacecedf3708920d
             const chunkSize = BigInt(50_000); // 50k blocks at a time
             const currentBlock = await publicClient.getBlockNumber();
             for (let fromBlock = startBlock; fromBlock <= currentBlock; fromBlock += chunkSize) {

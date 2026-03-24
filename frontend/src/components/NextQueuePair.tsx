@@ -1,8 +1,8 @@
 import { useReadContract, useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { abi as abi_sponsorship_queue } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
-import { abi as abi_distribution_queue } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/DistributionQueueModule#DistributionQueue.json";
-import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/sepolia_v0-9-8/artifacts/QueueHandlerModule#QueueHandler.json"
-import deployed_addresses from "../../../backend/ignition/deployments/sepolia_v0-9-8/deployed_addresses.json";
+import { abi as abi_sponsorship_queue } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/SponsorshipQueueModule#SponsorshipQueue.json";
+import { abi as abi_distribution_queue } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/DistributionQueueModule#DistributionQueue.json";
+import { abi as abi_queue_handler } from "../../../backend/ignition/deployments/mainnet_v0-9-9/artifacts/QueueHandlerModule#QueueHandler.json"
+import deployed_addresses from "../../../backend/ignition/deployments/mainnet_v0-9-9/deployed_addresses.json";
 import LoadingIndicator from "./LoadingIndicator";
 import { Address } from "viem";
 import ErrorIndicator from "./ErrorIndicator";
@@ -180,7 +180,7 @@ export function WriteContractButton() {
           <LoadingIndicator /> &nbsp; Finalizing... ⏳
         </button>
         <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
-          <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+          <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
             View on Etherscan ↗
           </Link>
         </div>
@@ -190,7 +190,7 @@ export function WriteContractButton() {
     return (
       <div className="mt-4 p-2 border-2 rounded-xl bg-gray-700 border-gray-400 text-gray-300 text-center">
         🎉 The queue pair has been processed successfully! 🎉<br />
-        <Link href={`https://sepolia.etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
+        <Link href={`https://etherscan.io/tx/${writeHash}`} target='_blank' className="text-purple-400">
           View on Etherscan ↗
         </Link>
       </div>
