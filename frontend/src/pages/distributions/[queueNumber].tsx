@@ -44,6 +44,11 @@ export default function DistributionDetails() {
             Add verification ↗
           </Link>
         </div>
+        <div className="mt-2">
+          <Link className="text-sky-600" href={`https://easscan.org/attestation/attestWithSchema/0x2228b949fb8b13a7d314bef8f9888c325d16d8f49f28a71a772ba16eb7942314`} target="_blank">
+            Add EAS attestation ↗
+          </Link>
+        </div>
 
         <div className="mt-8 border-purple-100 dark:border-purple-950 border-t-2 pt-8">
           <h2 className="text-2xl text-center">
